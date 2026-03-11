@@ -1,47 +1,82 @@
-# L_Shop — интернет-магазин настольных игр и аксессуаров (SPA + Express + TS)
+# L_Shop
 
-Тема: **Интернет-магазин настольных игр и аксессуаров** (категории: boardgames/cards/accessories/merch).
+Интернет-магазин настольных игр и аксессуаров. Учебный командный проект.
 
-## Быстрый старт (локально)
-### 1) Backend
+## Стек
+
+**Backend** — Node.js, Express, TypeScript, bcryptjs, JSON-хранилище
+**Frontend** — Vanilla TypeScript, Vite, CSS (без фреймворков)
+
+## Структура
+
+```
+L_Shop/
+├── backend/      Express API
+└── frontend/     SPA на TypeScript + Vite
+```
+
+## Запуск
+
+### Backend
+
 ```bash
 cd backend
 npm install
+cp .env.example .env
 npm run dev
 ```
-Backend: http://localhost:3001
 
-### 2) Frontend
+Сервер запустится на `http://localhost:3001`
+
+### Frontend
+
 ```bash
-cd ../frontend
+cd frontend
 npm install
+cp .env.example .env
 npm run dev
 ```
-Frontend: http://localhost:5173
 
-## Важное по ТЗ
-- Backend: **Express + TypeScript**
-- Frontend: **SPA на TypeScript** (рендер на клиенте)
-- Cookie сессии: **HttpOnly**, жизнь **10 минут**
-- Данные: JSON-файлы в `backend/data/`
-- Query-параметры для товаров (поиск/сорт/фильтры)
-- Data-атрибуты для тестов: `data-title`, `data-price`, `data-registration`, `data-delivery`, и basket-варианты
+Откроется на `http://localhost:5173`
 
-## Git / review ветка (обязательно)
-1) Репозиторий: **L_Shop**
-2) Сразу создайте пустую ветку `review`, потом PR `main -> review` (НЕ закрывать):
+## API
 
-```bash
-git checkout --orphan review
-git rm -rf .
-git commit --allow-empty -m "chore: init review branch (empty)"
-git push -u origin review
-git checkout main
+| Метод | Путь | Описание |
+|-------|------|----------|
+| POST | /api/users/register | Регистрация |
+| POST | /api/users/login | Вход |
+| POST | /api/users/logout | Выход |
+| GET | /api/users/me | Текущий пользователь |
+| GET | /api/products | Список товаров (фильтры: search, sort, category, available) |
+| GET | /api/basket | Корзина |
+| POST | /api/basket/add | Добавить товар |
+| POST | /api/basket/update | Изменить количество |
+| POST | /api/basket/remove | Удалить товар |
+| POST | /api/basket/checkout | Оформить заказ |
+| GET | /api/orders | История заказов (limit, offset) |
+
+## Переменные окружения
+
+**backend/.env**
+```
+PORT=3001
+FRONT_ORIGIN=http://localhost:5173
+SESSION_TTL_MS=86400000
 ```
 
-## Рекомендованные ветки по людям
-- `feat/auth` — users + sessions (ЛИД)
-- `feat/products` — products API + фильтры
-- `feat/front` — SPA страницы + UI + data-*
+**frontend/.env**
+```
+VITE_API_URL=http://localhost:3001/api
+```
 
-Подробный план PR/коммитов — ниже в сообщении ассистента.
+## Ветки
+
+- `feat/auth` — авторизация, корзина, заказы
+- `feat/products` — каталог товаров
+- `feat/front` — фронтенд
+
+## Команда
+
+- [Slava-Mshar](https://github.com/Slava-Mshar) — лид, бэкенд (auth, basket, orders)
+- [MartsinovichKirill](https://github.com/MartsinovichKirill) — бэкенд (products)
+- [EG0RG](https://github.com/EG0RG) — фронтенд
