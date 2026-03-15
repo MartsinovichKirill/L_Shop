@@ -1,0 +1,56 @@
+[
+  {
+    "id": "p1",
+    "title": "Catan",
+    "description": "Классическая стратегия про торговлю и развитие поселений.",
+    "price": 49.99,
+    "category": "boardgames",
+    "available": true,
+    "imageUrl": ""
+  },
+  {
+    "id": "p2",
+    "title": "Dixit",
+    "description": "Игра ассоциаций с красивыми иллюстрациями.",
+    "price": 34.5,
+    "category": "boardgames",
+    "available": true,
+    "imageUrl": ""
+  },
+  {
+    "id": "p3",
+    "title": "Uno",
+    "description": "Карточная вечеринка для друзей и семьи.",
+    "price": 9.99,
+    "category": "cards",
+    "available": true,
+    "imageUrl": ""
+  },
+  {
+    "id": "p4",
+    "title": "Протекторы 63.5×88",
+    "description": "Защитные протекторы для карт (100 шт).",
+    "price": 4.2,
+    "category": "accessories",
+    "available": true,
+    "imageUrl": ""
+  },
+  {
+    "id": "p5",
+    "title": "Фишки/маркеры (набор)",
+    "description": "Набор фишек для настольных игр.",
+    "price": 6.5,
+    "category": "accessories",
+    "available": false,
+    "imageUrl": ""
+  },
+  {
+    "id": "p6",
+    "title": "Футболка L_Shop",
+    "description": "Мерч магазина: хлопок, унисекс.",
+    "price": 19.0,
+    "category": "merch",
+    "available": true,
+    "imageUrl": ""
+  }
+]
