@@ -16,3 +16,12 @@ export function qStringArray(v: unknown): string[] | undefined {
   if (Array.isArray(v) && v.every((x) => typeof x === "string")) return v.slice();
   return undefined;
 }
+<<<<<<< HEAD
+=======
+
+export function qInt(v: unknown, min: number, max: number): number | undefined {
+  const n = Number(v);
+  if (!Number.isFinite(n) || !Number.isInteger(n) || n < min || n > max) return undefined;
+  return n;
+}
+>>>>>>> origin/feat/auth

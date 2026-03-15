@@ -1,10 +1,18 @@
 import type { Request, Response } from "express";
 import { productsStore } from "../storage/initData.js";
 import { qBool, qString, qStringArray } from "../utils/query.js";
+<<<<<<< HEAD
 import type { Category, Product } from "../types/domain.js";
 
 function isCategory(v: string): v is Category {
   return v === "boardgames" || v === "cards" || v === "accessories" || v === "merch";
+=======
+import { CATEGORIES } from "../types/domain.js";
+import type { Category, Product } from "../types/domain.js";
+
+function isCategory(v: string): v is Category {
+  return (CATEGORIES as readonly string[]).includes(v);
+>>>>>>> origin/feat/auth
 }
 
 export async function listProducts(req: Request, res: Response): Promise<void> {
