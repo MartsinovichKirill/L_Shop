@@ -1,0 +1,12 @@
+# Node
+node_modules/
+dist/
+.vite/
+.env
+.DS_Store
+
+# Runtime data (generated at startup)
+backend/data/users.json
+backend/data/sessions.json
+backend/data/baskets.json
+backend/data/orders.json
