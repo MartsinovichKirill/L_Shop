@@ -1,4 +1,4 @@
-export type Route = "/" | "/auth" | "/basket" | "/delivery";
+export type Route = "/" | "/auth" | "/basket" | "/delivery" | "/orders";
 
 type Handler = () => Promise<void> | void;
 
