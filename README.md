@@ -67,7 +67,6 @@ SESSION_TTL_MS=86400000
 **frontend/.env**
 ```
 VITE_API_URL=http://localhost:3001/api
-```
 
 ## Ветки
 
@@ -75,7 +74,7 @@ VITE_API_URL=http://localhost:3001/api
 - `feat/products` — каталог товаров
 - `feat/front` — фронтенд
 
-## Команда
+# Команда
 
 - [Slava-Mshar](https://github.com/Slava-Mshar) — лид, бэкенд (auth, basket, orders)
 - [MartsinovichKirill](https://github.com/MartsinovichKirill) — бэкенд (products)

@@ -4,12 +4,14 @@ import { env } from "../env.js";
 import { usersStore, sessionsStore } from "../storage/initData.js";
 import { addMsToIso, newId, nowIso } from "../utils/ids.js";
 import { isRecord, mustString, optString } from "../utils/validate.js";
+import { AppError } from "../utils/errors.js";
 import type { Session, User } from "../types/domain.js";
 
 function setSessionCookie(res: Response, sessionId: string): void {
   res.cookie(env.COOKIE_NAME, sessionId, {
     httpOnly: true,
     sameSite: "lax",
+    secure: env.IS_PROD,
     maxAge: env.SESSION_TTL_MS
   });
 }
@@ -20,17 +22,18 @@ function userPublic(u: User): Omit<User, "passwordHash"> {
 }
 
 export async function register(req: Request, res: Response): Promise<void> {
-  if (!isRecord(req.body)) throw new Error("Invalid body");
+  if (!isRecord(req.body)) throw new AppError("Invalid body");
 
   const name = mustString(req.body.name, "name");
   const password = mustString(req.body.password, "password");
+  if (password.length < 6) throw new AppError('Field "password" must be at least 6 characters');
 
   const email = optString(req.body.email);
   const login = optString(req.body.login);
   const phone = optString(req.body.phone);
 
   if (!email && !login && !phone) {
-    throw new Error('Provide at least one of: "email", "login", "phone"');
+    throw new AppError('Provide at least one of: "email", "login", "phone"');
   }
 
   const users = await usersStore.read();
@@ -38,7 +41,7 @@ export async function register(req: Request, res: Response): Promise<void> {
   const exists = users.some(
     (u) => (email && u.email === email) || (login && u.login === login) || (phone && u.phone === phone)
   );
-  if (exists) throw new Error("User already exists");
+  if (exists) throw new AppError("User already exists");
 
   const passwordHash = await bcrypt.hash(password, 10);
 
@@ -71,26 +74,28 @@ export async function register(req: Request, res: Response): Promise<void> {
 }
 
 export async function login(req: Request, res: Response): Promise<void> {
-  if (!isRecord(req.body)) throw new Error("Invalid body");
+  if (!isRecord(req.body)) throw new AppError("Invalid body");
 
   const password = mustString(req.body.password, "password");
   const email = optString(req.body.email);
   const loginV = optString(req.body.login);
   const phone = optString(req.body.phone);
-  const name = optString(req.body.name);
+
+  if (!email && !loginV && !phone) {
+    throw new AppError('Provide at least one of: "email", "login", "phone"');
+  }
 
   const users = await usersStore.read();
 
   const user =
     (email ? users.find((u) => u.email === email) : undefined) ??
     (loginV ? users.find((u) => u.login === loginV) : undefined) ??
-    (phone ? users.find((u) => u.phone === phone) : undefined) ??
-    (name ? users.find((u) => u.name === name) : undefined);
+    (phone ? users.find((u) => u.phone === phone) : undefined);
 
-  if (!user) throw new Error("Invalid credentials");
+  if (!user) throw new AppError("Invalid credentials");
 
   const ok = await bcrypt.compare(password, user.passwordHash);
-  if (!ok) throw new Error("Invalid credentials");
+  if (!ok) throw new AppError("Invalid credentials");
 
   const session: Session = {
     id: newId(),
