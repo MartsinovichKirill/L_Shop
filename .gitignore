@@ -5,6 +5,9 @@ dist/
 .env
 .DS_Store
 
+# Claude Code
+.claude/
+
 # Runtime data (generated at startup)
 backend/data/users.json
 backend/data/sessions.json
