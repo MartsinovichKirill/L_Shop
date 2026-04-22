@@ -17,7 +17,8 @@ export type Session = {
   expiresAt: string;
 };
 
-export type Category = "boardgames" | "cards" | "accessories" | "merch";
+export const CATEGORIES = ["boardgames", "cards", "accessories", "merch"] as const;
+export type Category = (typeof CATEGORIES)[number];
 
 export type Product = {
   id: Id;

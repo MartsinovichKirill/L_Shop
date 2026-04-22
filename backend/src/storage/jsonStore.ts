@@ -17,6 +17,7 @@ async function ensureFile(filePath: string, initial: Json): Promise<void> {
 
 export class JsonStore<T> {
   private readonly filePath: string;
+  private writeQueue: Promise<void> = Promise.resolve();
 
   constructor(filePath: string) {
     this.filePath = filePath;
@@ -33,7 +34,12 @@ export class JsonStore<T> {
     return parsed as T;
   }
 
-  async write(data: T): Promise<void> {
+  write(data: T): Promise<void> {
+    this.writeQueue = this.writeQueue.then(() => this._write(data));
+    return this.writeQueue;
+  }
+
+  private async _write(data: T): Promise<void> {
     const dir = path.dirname(this.filePath);
     await ensureDir(dir);
 
