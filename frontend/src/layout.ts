@@ -9,6 +9,7 @@ export function renderLayout(contentHtml: string): void {
 
   const userPart = state.user
     ? `<span class="muted">Привет, <b>${escapeHtml(state.user.name)}</b></span>
+       <a data-link href="/orders" class="btn">Мои заказы</a>
        <button id="logoutBtn" class="btn">Выйти</button>`
     : `<a data-link href="/auth" class="btn">Войти / Регистрация</a>`;
 

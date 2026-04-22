@@ -17,17 +17,19 @@ export async function renderHome(): Promise<void> {
       <h1>Каталог</h1>
 
       <div class="filters">
-        <input id="search" class="input" placeholder="Поиск по названию/описанию..." />
-        <select id="sort" class="input">
-          <option value="">Сортировка</option>
-          <option value="price_asc">Цена ↑</option>
-          <option value="price_desc">Цена ↓</option>
-        </select>
-
-        <label class="check">
-          <input id="available" type="checkbox" />
-          Только в наличии
-        </label>
+        <div class="filter-row">
+          <input id="search" class="input" placeholder="Поиск по названию/описанию..." />
+          <select id="sort" class="input">
+            <option value="">Сортировка</option>
+            <option value="price_asc">Цена ↑</option>
+            <option value="price_desc">Цена ↓</option>
+          </select>
+          <label class="check">
+            <input id="available" type="checkbox" />
+            Только в наличии
+          </label>
+          <button id="apply" class="btn primary">Применить</button>
+        </div>
 
         <div class="cats">
           ${categories
@@ -40,8 +42,6 @@ export async function renderHome(): Promise<void> {
             )
             .join("")}
         </div>
-
-        <button id="apply" class="btn primary">Применить</button>
       </div>
     </section>
 
@@ -73,7 +73,7 @@ export async function renderHome(): Promise<void> {
         category: cats.length ? cats : undefined
       });
 
-      grid.innerHTML = items.map(cardHtml).join("");
+      grid!.innerHTML = items.map(cardHtml).join("");
       bindAddButtons();
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Ошибка загрузки товаров", "error");
